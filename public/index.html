@@ -1,1 +1,181 @@
 
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>سوقك | تسوق بسهولة</title>
+  <meta name="description" content="سوقك، متجرك الإلكتروني لعرض المنتجات واستقبال الطلبات بسهولة.">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #172033;
+    }
+    header {
+      background: #123b2c;
+      color: white;
+      padding: 18px 16px;
+    }
+    .top {
+      max-width: 1000px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .logo { font-size: 27px; font-weight: bold; }
+    .logo span { color: #ffd166; }
+    .tagline { font-size: 13px; margin-top: 5px; }
+    .hero {
+      max-width: 1000px;
+      margin: 24px auto;
+      padding: 35px 20px;
+      background: linear-gradient(135deg, #dff5e8, #fff2cf);
+      border-radius: 20px;
+      text-align: center;
+    }
+    .hero h1 { font-size: 30px; margin: 0 0 12px; }
+    .hero p { line-height: 1.9; color: #465365; }
+    .search {
+      width: 100%;
+      max-width: 500px;
+      padding: 14px;
+      border: 1px solid #d7deea;
+      border-radius: 12px;
+      font-size: 16px;
+      margin-top: 12px;
+    }
+    main { max-width: 1000px; margin: 25px auto; padding: 0 14px; }
+    .section-title { font-size: 22px; margin-bottom: 16px; }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 15px;
+    }
+    .product {
+      background: white;
+      border-radius: 15px;
+      padding: 14px;
+      box-shadow: 0 4px 15px #14213d0c;
+      text-align: center;
+    }
+    .product-icon {
+      height: 115px;
+      display: grid;
+      place-items: center;
+      background: #eef4ef;
+      border-radius: 12px;
+      font-size: 48px;
+    }
+    .product h3 { font-size: 16px; }
+    .product p { color: #64748b; font-size: 13px; }
+    .price { color: #137547; font-weight: bold; }
+    button, .button {
+      border: 0;
+      border-radius: 9px;
+      padding: 11px 14px;
+      background: #167447;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .info {
+      margin: 25px 0;
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      line-height: 1.9;
+    }
+    footer {
+      text-align: center;
+      background: #123b2c;
+      color: white;
+      padding: 22px 12px;
+      margin-top: 35px;
+      font-size: 13px;
+    }
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 24px; }
+      .products { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="top">
+      <div>
+        <div class="logo">سوق<span>ك</span></div>
+        <div class="tagline">منتجات تختارها، وطلبات أسهل</div>
+      </div>
+      <a class="button" href="#products">تصفح المنتجات</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>مرحبًا بك في سوقك 🛍️</h1>
+    <p>اكتشف المنتجات، اختر ما يناسبك، وأرسل طلبك بسهولة من هاتفك.</p>
+    <input class="search" id="search" type="search"
+      placeholder="ابحث عن منتج..." aria-label="ابحث عن منتج">
+  </section>
+
+  <main>
+    <h2 class="section-title" id="products">✨ منتجاتنا</h2>
+    <div class="products" id="product-list"></div>
+
+    <section class="info">
+      <h2>📦 كيف تطلب؟</h2>
+      <p>اختر المنتج الذي يعجبك، ثم تواصل معنا لتأكيد السعر والتوصيل.</p>
+      <p>سيتم إضافة المنتجات الحقيقية وصورها وأسعارها عند إعداد لوحة الإدارة.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div>© <span id="year"></span> سوقك Souqak</div>
+    <div>متجر إلكتروني قيد الإعداد</div>
+  </footer>
+
+  <script>
+    const products = [
+      { name: "منتج جديد", price: "السعر عند الطلب", icon: "🎁" },
+      { name: "إكسسوارات", price: "السعر عند الطلب", icon: "⌚" },
+      { name: "أدوات منزلية", price: "السعر عند الطلب", icon: "🏠" },
+      { name: "منتجات مميزة", price: "السعر عند الطلب", icon: "✨" }
+    ];
+
+    const list = document.getElementById("product-list");
+
+    function showProducts(query = "") {
+      const filtered = products.filter(p =>
+        p.name.toLowerCase().includes(query.toLowerCase())
+      );
+
+      list.innerHTML = filtered.length
+        ? filtered.map(p => `
+          <article class="product">
+            <div class="product-icon">${p.icon}</div>
+            <h3>${p.name}</h3>
+            <p class="price">${p.price}</p>
+            <button type="button" onclick="alert('سيتم تفعيل الطلبات بعد ربط نظام الطلبات.')">
+              تفاصيل المنتج
+            </button>
+          </article>
+        `).join("")
+        : "<p>لم نعثر على منتج بهذا الاسم.</p>";
+    }
+
+    document.getElementById("search").addEventListener("input", e => {
+      showProducts(e.target.value);
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+    showProducts();
+  </script>
+</body>
+</html>
